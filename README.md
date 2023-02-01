@@ -10,13 +10,13 @@
 Install via yarn or npm
 
 ```bash
-$ yarn add dry-replacer-js
+$ yarn add dry-replacer-js@latest
 ```
 
 or
 
 ```bash
-$ npm i dry-replacer-js
+$ npm i dry-replacer-js@latest
 ```
 
 ## Usage
