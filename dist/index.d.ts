@@ -1,5 +1,8 @@
-import { DryReplacer } from './packages/replacer';
-declare const _default: {
-    DryReplacer: typeof DryReplacer;
-};
-export default _default;
+declare class DryReplacer {
+    data: object;
+    constructor(data: object);
+    replaceValue(key: string, value: any, data: object, template: object): void;
+    recursiveReplace(data: object, template: any): object;
+    try(jsonToParse: string): object;
+}
+export default DryReplacer;
