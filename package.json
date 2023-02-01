@@ -1,17 +1,28 @@
 {
   "name": "dry-replacer-js",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple and lightweight library to replace variables in the JSON template",
+  "author": "Thadeu Esteves<tadeuu@gmail.com>",
+  "license": "MIT",
   "main": "dist/index.js",
+  "repository": {
+    "url": "https://github.com/thadeu/dry-replacer-js"
+  },
   "files": [
+    "src",
     "dist"
   ],
   "scripts": {
     "test": "npx jest --runInBand --detectOpenHandles"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "JSON template",
+    "JSON replacer",
+    "replace variable JSON",
+    "regex json template",
+    "json",
+    "template"
+  ],
   "devDependencies": {
     "@sucrase/jest-plugin": "^3.0.0",
     "@types/jest": "^29.4.0",
