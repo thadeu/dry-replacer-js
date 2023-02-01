@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "target": "ES2022",
+    "lib": ["ESNext", "dom"],
+    "outDir": "dist",
+    "moduleResolution": "node",
+
+    "types": ["node", "jest"],
+
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+
+    "declaration": true,
+    "removeComments": true,
+    "strict": false,
+    "noUnusedLocals": true,
+    "esModuleInterop": true,
+    "skipLibCheck": false,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["./src/**/*", "spec/**/*"],
+  "exclude": ["./node_modules", "./lib"]
+}
