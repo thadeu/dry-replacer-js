@@ -1,4 +1,4 @@
-import dryreplacer from '@/packages/replacer'
+import dryreplacer from '../'
 
 const data = {
   id: 1,
