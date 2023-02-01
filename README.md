@@ -2,7 +2,7 @@
 
 🐍 A simple and lightweight library to replace variables in the JSON template  
 
-[![ci](https://github.com/thadeu/dry-replacer-js/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/thadeu/dry-replacer-js/actions/workflows/ci.yml)
+[![ci](https://github.com/thadeu/dry-replacer-js/actions/workflows/ci.yml/badge.svg)](https://github.com/thadeu/dry-replacer-js/actions/workflows/ci.yml)
 [![Npm package version](https://badgen.net/npm/v/@thadeu/dry-replacer-js)](https://www.npmjs.com/package/@thadeu/dry-replacer-js)
 
 ## Install
