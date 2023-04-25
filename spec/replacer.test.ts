@@ -173,4 +173,41 @@ describe('DryReplacer', () => {
       expect(result['obj']).toMatchObject(data.complex[0].obj)
     })
   })
+
+  describe('dont remove space between words',  () => {
+    test('it should be return space between words', () => {
+      const webhook = {
+        ticket: [
+          {
+            "source": "call",
+            "attribute": "outbound_calls.extension",
+            "label": "Ramal do atendente"
+          },
+          {
+            "source": "call",
+            "attribute": "outbound_calls.duration",
+            "label": "Duração do atendimento"
+          },
+          {
+            "source": "call",
+            "attribute": "post_attendances.digits",
+            "label": "Nota da pesquisa - Avaliação da URA"
+          }
+        ]
+      }
+
+      let template = {
+        first_ticket_label: '{{ticket.0.label}}',
+        last_ticket_label: '{{ticket.2.label}}'
+      }      
+  
+      const replacer = new dryreplacer(webhook)
+      let result = replacer.try(JSON.stringify(template))
+
+      expect(result).toMatchObject({
+        first_ticket_label: 'Ramal do atendente',
+        last_ticket_label: 'Nota da pesquisa - Avaliação da URA'
+      })
+    })
+  })
 })
