@@ -1,6 +1,6 @@
 {
   "name": "dry-replacer-js",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A simple and lightweight library to replace variables in the JSON template",
   "author": "Thadeu Esteves<tadeuu@gmail.com>",
   "license": "MIT",
@@ -15,7 +15,8 @@
     "dist"
   ],
   "scripts": {
-    "test": "npx jest --runInBand --detectOpenHandles",
+    "test": "npx jest --runInBand --detectOpenHandles --silent=false --verbose false",
+    "test:build": "npm run build && npx jest --runInBand --detectOpenHandles --silent=false --verbose false",
     "build": "rm -rf dist && microbundle src/index.ts"
   },
   "keywords": [
@@ -34,7 +35,7 @@
     "@types/lodash.isplainobject": "^4.0.7",
     "@types/lodash.set": "^4.3.7",
     "@types/node": "^18.11.18",
-    "jest": "^29.4.1",
+    "jest": "^29.6.2",
     "microbundle": "^0.15.1",
     "rimraf": "^4.1.2",
     "sucrase": "^3.29.0",
