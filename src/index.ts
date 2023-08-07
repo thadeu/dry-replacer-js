@@ -11,17 +11,18 @@ class DryReplacer {
   }
 
   replaceValue(key: string, value: any, data: object, template: object): void {
-    let matchedArray = String(value).match(/{{.*?}}/g)
-    
+    let matchedArray = String(value).match(/{{.*?}}/g) // extract only {{}} pattern
+
     if (matchedArray) {
       for (let item of matchedArray.reverse()) {
         let patternKey = item.replace(/[{}]/g, '')
-        let templateValue = get(template, key)
-        let dataValue = get(data, patternKey)
-        let newValue = dataValue
+        let spotting = get(template, key)
 
-        if (['string'].includes(typeof dataValue)) {
-          newValue = templateValue.replace(new RegExp(item), dataValue)
+        let valueFromData = get(data, patternKey)
+        let newValue = valueFromData
+
+        if (['string'].includes(typeof valueFromData)) {
+          newValue = spotting.replace(item, valueFromData)
         }
 
         set(template, key, newValue)
