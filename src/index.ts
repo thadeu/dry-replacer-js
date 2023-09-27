@@ -3,11 +3,17 @@ import set from 'lodash.set'
 import isArray from 'lodash.isarray'
 import isPlainObject from 'lodash.isplainobject'
 
+type Options = {
+  strict?: boolean
+}
+
 class DryReplacer {
   data: object
+  strict: boolean = true
 
-  constructor(data: object) {
+  constructor(data: object, options?: Options) {
     this.data = data
+    this.strict = options?.strict
   }
 
   replaceValue(key: string, value: any, data: object, template: object): void {
@@ -20,11 +26,16 @@ class DryReplacer {
 
         let valueFromData = get(data, patternKey)
         let newValue = valueFromData
-
-        if (['string'].includes(typeof valueFromData)) {
-          newValue = spotting.replace(item, valueFromData)
+        
+        if (['undefined', undefined, null, 'string'].includes(typeof valueFromData)) {
+          if (this.strict) {
+            newValue = spotting.replace(item, valueFromData)
+          } else {
+            newValue = spotting.replace(item, valueFromData || '')
+          }
         }
 
+        
         set(template, key, newValue)
       }
     }

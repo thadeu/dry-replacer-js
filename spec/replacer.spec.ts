@@ -39,6 +39,30 @@ const data = {
 }
 
 describe('DryReplacer', () => {
+  describe('use case undefined value', () => {
+    it('case undefined', () => {
+      let data = {
+        cliente_nome: 'Thadeu'
+      }
+
+      let template = {
+        interaction: {
+          action: {
+            prompt: '{{nome}} infelizmente foi negado',
+            option: '400',
+          },
+        },
+      }
+
+      const replacer = new dryreplacer(data, { options: { strict: false }})
+      let result: any = replacer.try(JSON.stringify(template))
+
+      let prompt = result?.interaction?.action?.prompt
+
+      expect(prompt).toBe(' infelizmente foi negado')
+    })
+  })
+
   describe('root replaces', () => {
     test('fixed value', () => {
       let template = {
