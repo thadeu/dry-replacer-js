@@ -19,6 +19,12 @@ or
 $ npm i dry-replacer-js@latest
 ```
 
+or directly from Github
+
+```bash
+$ pnpm i thadeu/dry-replacer-js
+```
+
 ## Usage
 
 ```js
@@ -76,7 +82,7 @@ let template = {
   code: 'fixedvalue',
 }
 
-const replacer = new dryreplacer(data)
+const replacer = new dryreplacer(data, { strict: true })
 let result = replacer.try(JSON.stringify(template, null, 4))
 ```
 
