@@ -59,7 +59,7 @@ describe('DryReplacer', () => {
       const replacer = new dryreplacer(data)
       let result = replacer.try(JSON.stringify(template))
 
-      expect(result['id']).toBe(1)
+      expect(result['id']).toBe('1')
     })
 
     test('string value', () => {
@@ -137,7 +137,7 @@ describe('DryReplacer', () => {
       const replacer = new dryreplacer(data)
       let result = replacer.try(JSON.stringify(template))
 
-      expect(result['id']).toBe(1)
+      expect(result['id']).toBe('1')
       expect(result['name']).toBe('obj')
       expect(result['list']).toEqual(expect.arrayContaining(['a', 'b', 'c']))
     })
@@ -152,7 +152,7 @@ describe('DryReplacer', () => {
       const replacer = new dryreplacer(data)
       let result = replacer.try(JSON.stringify(template))
 
-      expect(result['id']).toBe(1)
+      expect(result['id']).toBe('1')
       expect(result['name']).toBe('obj1')
       expect(result['list']).toEqual(expect.arrayContaining(['a', 'b', 'c']))
     })
@@ -167,7 +167,7 @@ describe('DryReplacer', () => {
       const replacer = new dryreplacer(data)
       let result = replacer.try(JSON.stringify(template))
 
-      expect(result['id']).toBe(999)
+      expect(result['id']).toBe('999')
       expect(result['name']).toBe('complex')
       expect(result['obj']).toMatchObject(data.complex[0].obj)
     })
@@ -288,6 +288,25 @@ describe('DryReplacer', () => {
 
       expect(result).toMatchObject({
         base_index: 'index1 - index0',
+      })
+    })
+
+    it('should be return value if event numeric', () => {
+      const webhook = {
+        variables: {
+          action: 1,
+        },
+      }
+
+      let template = {
+        action: 'O numero é {{variables.action}}',
+      }
+
+      const replacer = new dryreplacer(webhook)
+      let result = replacer.try(JSON.stringify(template))
+
+      expect(result).toMatchObject({
+        action: 'O numero é 1',
       })
     })
   })

@@ -25,6 +25,10 @@ class DryReplacer {
           newValue = spotting.replace(item, valueFromData)
         }
 
+        if (['number'].includes(typeof valueFromData)) {
+          newValue = spotting.replace(item, valueFromData)
+        }
+
         set(template, key, newValue)
       }
     }
