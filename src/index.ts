@@ -9,7 +9,7 @@ type Options = {
 
 class DryReplacer {
   data: object
-  strict: boolean = true
+  strict?: boolean = true
 
   constructor(data: object, options?: Options) {
     this.data = data
@@ -27,11 +27,14 @@ class DryReplacer {
         let valueFromData = get(data, patternKey)
         let newValue = valueFromData
 
-        if (
-          ['undefined', undefined, null, 'string'].includes(
-            typeof valueFromData
-          )
-        ) {
+        const isStringOrFalsy = [
+          'undefined',
+          undefined,
+          null,
+          'string',
+        ].includes(typeof valueFromData)
+
+        if (isStringOrFalsy) {
           if (this.strict) {
             newValue = spotting.replace(item, valueFromData)
           } else {

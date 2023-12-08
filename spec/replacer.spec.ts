@@ -42,7 +42,7 @@ describe('DryReplacer', () => {
   describe('use case undefined value', () => {
     it('case undefined', () => {
       let data = {
-        cliente_nome: 'Thadeu'
+        cliente_nome: 'Thadeu',
       }
 
       let template = {
@@ -54,7 +54,7 @@ describe('DryReplacer', () => {
         },
       }
 
-      const replacer = new dryreplacer(data, { options: { strict: false }})
+      const replacer = new dryreplacer(data, { strict: false })
       let result: any = replacer.try(JSON.stringify(template))
 
       let prompt = result?.interaction?.action?.prompt
@@ -318,7 +318,7 @@ describe('DryReplacer', () => {
     it('should be return value if event numeric', () => {
       const webhook = {
         variables: {
-          action: 1,
+          action: 10,
         },
       }
 
@@ -330,7 +330,26 @@ describe('DryReplacer', () => {
       let result = replacer.try(JSON.stringify(template))
 
       expect(result).toMatchObject({
-        action: 'O numero é 1',
+        action: 'O numero é 10',
+      })
+    })
+
+    it('should be return value if event numeric', () => {
+      const webhook = {
+        variables: {
+          action: '10',
+        },
+      }
+
+      let template = {
+        action: 'O numero é {{variables.action}} com valor depois',
+      }
+
+      const replacer = new dryreplacer(webhook)
+      let result = replacer.try(JSON.stringify(template))
+
+      expect(result).toMatchObject({
+        action: 'O numero é 10 com valor depois',
       })
     })
   })
