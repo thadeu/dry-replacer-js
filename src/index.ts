@@ -5,15 +5,18 @@ import isPlainObject from 'lodash.isplainobject'
 
 type Options = {
   strict?: boolean
+  keepTypeof?: boolean
 }
 
 class DryReplacer {
   data: object
   strict?: boolean = true
+  keepTypeof?: boolean = false
 
   constructor(data: object, options?: Options) {
     this.data = data
     this.strict = options?.strict
+    this.keepTypeof = options?.keepTypeof
   }
 
   replaceValue(key: string, value: any, data: object, template: object): void {
@@ -44,6 +47,10 @@ class DryReplacer {
 
         if (['number'].includes(typeof valueFromData)) {
           newValue = spotting.replace(item, valueFromData)
+
+          if (this.keepTypeof && /^-?\.?_?\d+$/.test(newValue)) {
+            newValue = Number(newValue)
+          }
         }
 
         set(template, key, newValue)

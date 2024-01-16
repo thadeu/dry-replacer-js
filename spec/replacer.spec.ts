@@ -352,5 +352,43 @@ describe('DryReplacer', () => {
         action: 'O numero é 10 com valor depois',
       })
     })
+
+    it('should be return value if event numeric', () => {
+      const webhook = {
+        variables: {
+          action: 10,
+        },
+      }
+
+      let template = {
+        action: '{{variables.action}}',
+      }
+
+      const replacer = new dryreplacer(webhook, { keepTypeof: true })
+      let result = replacer.try(JSON.stringify(template))
+
+      expect(result).toMatchObject({
+        action: 10,
+      })
+    })
+
+    it('should be return value if event numeric', () => {
+      const webhook = {
+        variables: {
+          request_id: -110,
+        },
+      }
+
+      let template = {
+        action: '{{variables.request_id}}',
+      }
+
+      const replacer = new dryreplacer(webhook, { keepTypeof: true })
+      let result = replacer.try(JSON.stringify(template))
+
+      expect(result).toMatchObject({
+        action: -110,
+      })
+    })
   })
 })
