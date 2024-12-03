@@ -8,6 +8,31 @@ type Options = {
   keepTypeof?: boolean
 }
 
+const castBoolean = strOrBool => {
+  if ([false, 'false'].includes(strOrBool)) {
+    return false
+  }
+
+  if ([true, 'true'].includes(strOrBool)) {
+    return true
+  }
+
+  return strOrBool
+}
+
+const isFalsy = bool => ['false'].includes(String(bool))
+
+const isTruthy = bool => ['true'].includes(String(bool))
+
+const isString = data => [
+  'string',
+].includes(typeof data)
+
+const isNullify = data => [
+  undefined,
+  null,
+].includes(data)
+
 class DryReplacer {
   data: object
   strict?: boolean = true
@@ -30,14 +55,15 @@ class DryReplacer {
         let valueFromData = get(data, patternKey)
         let newValue = valueFromData
 
-        const isStringOrFalsy = [
-          'undefined',
-          undefined,
-          null,
-          'string',
-        ].includes(typeof valueFromData)
+        if (isNullify(valueFromData)) {
+          valueFromData = ''
+        }
 
-        if (isStringOrFalsy) {
+        if (isFalsy(valueFromData) || isTruthy(valueFromData)) {
+          valueFromData = String(valueFromData)
+        }
+
+        if (isString(valueFromData)) {
           if (this.strict) {
             newValue = spotting.replace(item, valueFromData)
           } else {
@@ -52,6 +78,15 @@ class DryReplacer {
             newValue = Number(newValue)
           }
         }
+
+        if (isFalsy(newValue)) {
+          newValue = castBoolean(newValue)
+        }
+
+        if (isTruthy(newValue)) {
+          newValue = castBoolean(newValue)
+        }
+
 
         set(template, key, newValue)
       }

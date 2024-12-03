@@ -390,5 +390,125 @@ describe('DryReplacer', () => {
         action: -110,
       })
     })
+
+    it('when value is null, we gonna transform to string', () => {
+      const variables = {
+        request_id: null
+      }
+
+      let template = {
+        text: {
+          type: 'mrkdwn',
+          text: '```REQS\n\n>>> request_id: {{request_id}}```'
+        }
+      }
+
+      const replacer = new dryreplacer(variables, { strict: false, keepTypeof: true })
+
+      let result = replacer.try(JSON.stringify(template))
+
+      expect(result).toMatchObject({
+        text: {
+          type: 'mrkdwn',
+          text: '```REQS\n\n>>> request_id: ```'
+        }
+      })
+    })
+
+    it('when value is false, we gonna transform to string', () => {
+      const variables = {
+        request_id: false
+      }
+
+      let template = {
+        text: {
+          type: 'mrkdwn',
+          text: '```REQS\n\n>>> request_id: {{request_id}}```'
+        }
+      }
+
+      const replacer = new dryreplacer(variables, { strict: false, keepTypeof: true })
+
+      let result = replacer.try(JSON.stringify(template))
+
+      expect(result).toMatchObject({
+        text: {
+          type: 'mrkdwn',
+          text: '```REQS\n\n>>> request_id: false```'
+        }
+      })
+    })
+
+    it('when value is true, we gonna transform to string', () => {
+      const variables = {
+        request_id: true
+      }
+
+      let template = {
+        text: {
+          type: 'mrkdwn',
+          text: '```REQS\n\n>>> request_id: {{request_id}}```'
+        }
+      }
+
+      const replacer = new dryreplacer(variables, { strict: false, keepTypeof: true })
+
+      let result = replacer.try(JSON.stringify(template))
+
+      expect(result).toMatchObject({
+        text: {
+          type: 'mrkdwn',
+          text: '```REQS\n\n>>> request_id: true```'
+        }
+      })
+    })
+
+    it('when value is undefined, we gonna transform to string', () => {
+      const variables = {
+        request_id: undefined
+      }
+
+      let template = {
+        text: {
+          type: 'mrkdwn',
+          text: '```REQS\n\n>>> request_id: {{request_id}}```'
+        }
+      }
+
+      const replacer = new dryreplacer(variables, { strict: false, keepTypeof: true })
+
+      let result = replacer.try(JSON.stringify(template))
+
+      expect(result).toMatchObject({
+        text: {
+          type: 'mrkdwn',
+          text: '```REQS\n\n>>> request_id: ```'
+        }
+      })      
+    })
+
+    it('when value is zero(0), we gonna transform to string', () => {
+      const variables = {
+        request_id: 0
+      }
+
+      let template = {
+        text: {
+          type: 'mrkdwn',
+          text: '```REQS\n\n>>> request_id: {{request_id}}```'
+        }
+      }
+
+      const replacer = new dryreplacer(variables, { strict: false, keepTypeof: true })
+
+      let result = replacer.try(JSON.stringify(template))
+
+      expect(result).toMatchObject({
+        text: {
+          type: 'mrkdwn',
+          text: '```REQS\n\n>>> request_id: 0```'
+        }
+      })      
+    })
   })
 })
