@@ -1,6 +1,6 @@
 {
   "name": "dry-replacer-js",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "A simple and lightweight library to replace variables in the JSON template",
   "author": "Thadeu Esteves<tadeuu@gmail.com>",
   "license": "MIT",
