@@ -6,9 +6,11 @@ import isPlainObject from 'lodash.isplainobject'
 type Options = {
   strict?: boolean
   keepTypeof?: boolean
+  stringifyTypeof?: boolean
+  [key: string]: any
 }
 
-const castBoolean = strOrBool => {
+const castBoolean = (strOrBool) => {
   if ([false, 'false'].includes(strOrBool)) {
     return false
   }
@@ -20,28 +22,25 @@ const castBoolean = strOrBool => {
   return strOrBool
 }
 
-const isFalsy = bool => ['false'].includes(String(bool))
+const isFalsy = (bool) => ['false'].includes(String(bool))
 
-const isTruthy = bool => ['true'].includes(String(bool))
+const isTruthy = (bool) => ['true'].includes(String(bool))
 
-const isString = data => [
-  'string',
-].includes(typeof data)
+const isString = (data) => ['string'].includes(typeof data)
 
-const isNullify = data => [
-  undefined,
-  null,
-].includes(data)
+const isNullify = (data) => [undefined, null].includes(data)
 
 class DryReplacer {
   data: object
   strict?: boolean = true
   keepTypeof?: boolean = false
+  stringifyTypeof?: boolean = false
 
   constructor(data: object, options?: Options) {
     this.data = data
     this.strict = options?.strict
     this.keepTypeof = options?.keepTypeof
+    this.stringifyTypeof = options?.stringifyTypeof
   }
 
   replaceValue(key: string, value: any, data: object, template: object): void {
@@ -61,6 +60,12 @@ class DryReplacer {
 
         if (isFalsy(valueFromData) || isTruthy(valueFromData)) {
           valueFromData = String(valueFromData)
+        }
+
+        if (matchedArray.length > 1) {
+          if (this.stringifyTypeof && (Array.isArray(valueFromData) || isPlainObject(valueFromData))) {
+            valueFromData = JSON.stringify(valueFromData)
+          }
         }
 
         if (isString(valueFromData)) {
@@ -87,7 +92,6 @@ class DryReplacer {
           newValue = castBoolean(newValue)
         }
 
-
         set(template, key, newValue)
       }
     }
@@ -108,7 +112,11 @@ class DryReplacer {
     return template
   }
 
-  try(jsonToParse: string): object {
+  try(jsonToParse: string, options = {}): object {
+    if (options) {
+      Object.assign(this, options)
+    }
+
     let template = JSON.parse(jsonToParse)
     this.recursiveReplace(this.data, template)
 
